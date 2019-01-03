@@ -16,7 +16,7 @@ public class BirthdayService {
         for (Employee employee : employeeService.getEmployees()) {
             if (employee.isBirthday(date)) {
                 String recipient = employee.getEmail();
-                String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
+                String body = String.format("Happy Birthday, dear %s!", employee.getFirstName());
                 String subject = "Happy Birthday!";
                 emailService.sendEmail("sender@here.com", subject, body, recipient);
             }
