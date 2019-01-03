@@ -1,35 +1,24 @@
 package it.xpug.kata.birthdaygreetings;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.text.ParseException;
-
-import javax.mail.MessagingException;
-import javax.mail.internet.AddressException;
-
 public class BirthdayService {
 
-	private final EmailService emailService;
+    private final EmailService emailService;
+    private final EmployeeService employeeService;
 
-	public BirthdayService(EmailService emailService) {
-		this.emailService = emailService;
-	}
+    public BirthdayService(EmailService emailService, EmployeeService employeeService) {
+        this.emailService = emailService;
+        this.employeeService = employeeService;
+    }
 
-	public void sendGreetings(String fileName, XDate xDate, String smtpHost, int smtpPort) throws IOException, ParseException, AddressException, MessagingException {
-		BufferedReader in = new BufferedReader(new FileReader(fileName));
-		String str = "";
-		str = in.readLine(); // skip header
-		while ((str = in.readLine()) != null) {
-			String[] employeeData = str.split(", ");
-			Employee employee = new Employee(employeeData[1], employeeData[0], employeeData[2], employeeData[3]);
-			if (employee.isBirthday(xDate)) {
-				String recipient = employee.getEmail();
-				String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
-				String subject = "Happy Birthday!";
-				emailService.sendEmail("sender@here.com", subject, body, recipient);
-			}
-		}
-	}
+    public void sendGreetings(XDate xDate) {
+        for (Employee employee : employeeService.getEmployees()) {
+            if (employee.isBirthday(xDate)) {
+                String recipient = employee.getEmail();
+                String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
+                String subject = "Happy Birthday!";
+                emailService.sendEmail("sender@here.com", subject, body, recipient);
+            }
+        }
+    }
 
 }

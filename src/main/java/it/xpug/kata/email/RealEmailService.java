@@ -19,7 +19,7 @@ public class RealEmailService implements EmailService {
     }
 
     @Override
-    public void sendEmail(String sender, String subject, String body, String recipient) {
+    public void sendEmail(String sender, String subject, String body, String recipient) throws EmailServiceException {
         try {
             // Create a mail session
             java.util.Properties props = new java.util.Properties();
