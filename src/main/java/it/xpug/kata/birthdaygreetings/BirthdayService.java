@@ -1,5 +1,7 @@
 package it.xpug.kata.birthdaygreetings;
 
+import java.time.LocalDate;
+
 public class BirthdayService {
 
     private final EmailService emailService;
@@ -10,9 +12,9 @@ public class BirthdayService {
         this.employeeService = employeeService;
     }
 
-    public void sendGreetings(XDate xDate) {
+    public void sendGreetings(LocalDate date) {
         for (Employee employee : employeeService.getEmployees()) {
-            if (employee.isBirthday(xDate)) {
+            if (employee.isBirthday(date)) {
                 String recipient = employee.getEmail();
                 String body = "Happy Birthday, dear %NAME%!".replace("%NAME%", employee.getFirstName());
                 String subject = "Happy Birthday!";

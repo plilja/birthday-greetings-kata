@@ -6,7 +6,6 @@ import it.xpug.kata.birthdaygreetings.EmployeeService;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class FileEmployeeService implements EmployeeService {
                 result.add(employee);
             }
             return result;
-        } catch (IOException | ParseException ex) {
+        } catch (IOException ex) {
             throw new EmployeeServiceException("Error caught while reading employees from file", ex);
         }
     }

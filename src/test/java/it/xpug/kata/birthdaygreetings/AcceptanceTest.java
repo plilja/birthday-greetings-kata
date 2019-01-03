@@ -8,6 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -32,9 +34,9 @@ public class AcceptanceTest {
     }
 
     @Test
-    public void willSendGreetings_whenItsSomebodysBirthday() throws Exception {
+    public void willSendGreetings_whenItsSomebodysBirthday() {
 
-        birthdayService.sendGreetings(new XDate("2008/10/08"));
+        birthdayService.sendGreetings(LocalDate.parse("2008-10-08"));
 
         assertEquals("message not sent?", 1, mailServer.getReceivedEmailSize());
         SmtpMessage message = (SmtpMessage) mailServer.getReceivedEmail().next();
@@ -42,13 +44,14 @@ public class AcceptanceTest {
         assertEquals("Happy Birthday!", message.getHeaderValue("Subject"));
         String[] recipients = message.getHeaderValues("To");
         assertEquals(1, recipients.length);
-        assertEquals("john.doe@foobar.com", recipients[0].toString());
+        assertEquals("john.doe@foobar.com", recipients[0]);
     }
 
     @Test
-    public void willNotSendEmailsWhenNobodysBirthday() throws Exception {
-        birthdayService.sendGreetings(new XDate("2008/01/01"));
+    public void willNotSendEmailsWhenNobodysBirthday() {
+        birthdayService.sendGreetings(LocalDate.parse("2008-01-01"));
 
         assertEquals("what? messages?", 0, mailServer.getReceivedEmailSize());
     }
+
 }
