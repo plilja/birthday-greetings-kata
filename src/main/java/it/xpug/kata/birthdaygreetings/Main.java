@@ -1,4 +1,4 @@
-package it.xpug.kata.birthday_greetings;
+package it.xpug.kata.birthdaygreetings;
 
 import java.io.*;
 import java.text.ParseException;
